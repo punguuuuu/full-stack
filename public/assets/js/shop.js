@@ -128,6 +128,7 @@ function checkout() {
     warning.style.opacity = 0;
 
     createEmail();
+    window.saveOrder(email);
 
     window.cartItems.length = 0;
     sessionStorage.setItem("cartItems", window.cartItems);
