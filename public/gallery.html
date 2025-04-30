@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+  <head>
+    <title>pungu</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/gallery.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="./assets/js/script.js" defer></script>
+
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@latest/prop-types.js"></script>
+    <script type="text/babel" src="./assets/js/menu.js"></script>
+    <script type="text/babel" src="./assets/js/gallery.js"></script>
+  </head>
+
+  <body onmousemove="mouseHover(event)">
+    <div id="menu"></div>
+
+    <main id="main" class="main">
+      <button id="menuBtn" onclick="toggleMenu(true)">Menu</button>
+
+      <h1 style="font-weight: normal; margin-top: 20px;">Gallery</h1>
+
+      <div id="gallery"></div>
+
+      <img
+        src="./assets/images/section/jeans.png"
+        alt="divider"
+        style="width: 100%; margin-top: 100px"
+      />
+
+      <h2 id="suggestion" style="margin-top: 150px; font-weight: normal;">Suggestions</h2>
+      <p class="text">Suggest things for me to draw !</p>
+      <div class="input-container" id="input">
+        <input type="text" class="lineEdit" />
+        <button id="submitBtn" onclick="submitText()">
+          Submit
+        </button>
+      </div>
+
+      <div id="rewardContainer" , style="display: block; padding-top:20px">
+        <p id="message" class="text"></p>
+        <div id="reward" , class="reward">
+          <img
+            src="./assets/images/food/cake.png"
+            alt="reward"
+            style="margin: -100px 0; width: 100%; max-width: 600px;"
+          />
+        </div>
+      </div>
+
+      <div style="position: relative; margin-top: 100px">
+        <img src="./assets/images/cat/hi.png" alt="hi" style="width: 100%; max-width: 600px;"/>
+        <p>that's it, bye ";</p>
+      </div>
+    </main>
+  </body>
+</html>

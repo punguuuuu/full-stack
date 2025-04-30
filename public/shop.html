@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+  <head>
+    <title>pungu</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/shop.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script type="module" src="./assets/js/database.js" defer></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="./assets/js/shop.js" defer></script>
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@latest/prop-types.js"></script>
+    <script type="text/babel" src="./assets/js/menu.js"></script>
+    <script type="text/babel" src="./assets/js/cart.js"></script>
+    <script type="text/babel" src="./assets/js/items.js"></script>
+  </head>
+
+  <body onmousemove="mouseHover(event)">
+    <nav id="menu"></nav>
+
+    <main id="main" class="main">
+      <button id="menuBtn" onclick="toggleMenu(true)">Menu</button>
+      <button id="cartBtn" onclick="toggleCart()">Cart</button>
+      <button id="toTopBtn" onclick="toTop()">Back to top</button>
+
+      <h1 style="font-weight: normal; margin-bottom: -50px">Shop</h1>
+      <p id="text">Buy freshly made food here !</p>
+
+      <h2>Bread</h2>
+      <div id="bread-items"></div>
+
+      <h2 style="padding-top: 150px">Snacks</h2>
+      <div id="snack-items"></div>
+
+      <h2 style="padding-top: 150px">Dessert</h2>
+      <div id="desert-items">
+      </div>
+    </main>
+
+    <div id="detail">
+      <a href="#close" class="containerBtn" onclick="showDetail(false)">X</a>
+      <img class="detail-content" id="image" />
+      <p id="caption"></p>
+      <p id="price"></p>
+      <div class="quantity">
+        <a class="quantityBtn" onclick="changeQuantity(false)">-</a>
+        <p id="quantityValue" class="quantityValue">1</p>
+        <a class="quantityBtn" onclick="changeQuantity(true)">+</a>
+      </div>
+      <div style="display: flex; justify-content: center">
+        <img class="loading" src="./assets/images/loading.gif" />
+        <button id="addBtn" class="customBtn" onclick="addToCart()">
+          Add to cart
+        </button>
+        <p id="message" class="message" style="color: rgb(82, 177, 82); text-align: center;">
+          Added to cart !
+        </p>
+      </div>
+    </div>
+
+    <div id="cart">
+      <a href="#close" class="containerBtn" onclick="showCart(false)">X</a>
+      <div id="cartInfo"></div>
+      <p id="cartTotal">Total " $ 0</p> 
+      <button id="checkoutBtn" class="customBtn" onclick="checkout()">
+        Checkout
+      </button>
+      <div style="display: flex; justify-content: center">
+        <p id="warning" class="message" style="color: red">Cart is empty !</p>
+      </div>
+    </div>
+
+  </body>
+</html>

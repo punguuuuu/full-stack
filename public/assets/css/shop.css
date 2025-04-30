@@ -1,0 +1,257 @@
+h2 {
+  font-size: 100px;
+  font-weight: normal;
+  margin-top: 0;
+  padding-top: 50px;
+}
+
+.items-container {
+  margin: 0 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.item {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.item:hover {
+  border: 2px solid rgb(219, 217, 217);
+  cursor: url("../cursors/15-Link-Select.cur"), pointer;
+}
+
+.item img {
+  width: auto;
+  height: 40vh;
+}
+
+div.item .desc {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+#detail {
+  position: fixed;
+  height: 100%;
+  width: 500px;
+  top: 0;
+  right: -800px;
+  list-style: none;
+  background-color: rgb(17, 17, 17);
+  margin: 0px;
+  padding-top: 50px;
+  overflow: hidden;
+  z-index: 5;
+  transition: right 0.5s ease;
+}
+
+.detail-content {
+  height: 40%;
+  width: auto;
+}
+
+.customBtn {
+  position: absolute;
+  width: 60%;
+  height: 80px;
+  color: white;
+  background-color: rgb(17, 17, 17);
+  font-size: 60px;
+  border: 3px solid white;
+  overflow: hidden;
+  bottom: 130px;
+  left: 20%;
+}
+
+#addBtn:hover {
+  background-color: rgb(235, 235, 235);
+  color: black;
+}
+
+#caption {
+  margin: 20px 0;
+  font-size: 70px;
+  color: white;
+}
+
+#price {
+  font-size: 35px;
+  color: white;
+}
+
+.quantity {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.quantity .quantityValue {
+  color: white;
+  display: inline;
+  margin: 0 20px;
+}
+
+.quantity .quantityBtn {
+  padding: 0 50px;
+  color: white;
+}
+
+#cartTotal {
+  position: absolute;
+  width: 100%;
+  color: white;
+  font-size: 30px;
+  bottom: 200px;
+}
+
+.loading {
+  position: absolute;
+  height: 95px;
+  bottom: 122px;
+}
+
+.message {
+  position: absolute;
+  opacity: 0;
+  font-size: 50px;
+  bottom: 20px;
+}
+
+#cartBtn {
+  position: sticky;
+  top: 45px;
+  left: 100%;
+  border: none;
+  background: none;
+  color: black;
+  z-index: 2;
+}
+
+#cart {
+  position: fixed;
+  height: 100%;
+  width: 500px;
+  top: 0;
+  right: -800px;
+  list-style: none;
+  background-color: rgb(17, 17, 17);
+  margin: 0px;
+  padding-top: 50px;
+  overflow: hidden;
+  z-index: 4;
+  transition: right 0.5s ease;
+}
+
+#cartInfo {
+  height: 62vh;
+  overflow-y: auto;
+  direction: rtl;
+}
+
+.cartItem {
+  color: white;
+  font-size: 40px;
+  margin: 0;
+}
+
+.itemQuantity {
+  color: white;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.itemQuantity:hover {
+  animation: none;
+}
+
+.itemPrice {
+  color: white;
+  font-size: 17px;
+  margin: 0;
+  padding: 0;
+}
+
+.remove {
+  color: red;
+  cursor: url("../cursors/15-Link-Select.cur"), pointer;
+  font-size: 30px;
+  margin-right: 30px;
+}
+
+#checkoutBtn:hover {
+  background-color: rgb(235, 235, 235);
+  color: black;
+}
+
+@media screen and (max-width: 1000px) {
+  #detail {
+    width: 350px;
+  }
+
+  #cart {
+    width: 350px;
+  }
+
+  #addBtn {
+    font-size: 50px;
+  }
+
+  #checkoutBtn {
+    font-size: 50px;
+  }
+
+  .detail-content {
+    width: 80%;
+    max-width: 400px;
+    height: auto;
+  }
+
+  #text {
+    font-size: 50px;
+    padding: 0 40px;
+    padding-top: 20px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #detail {
+    width: 100%;
+    transition: right 1s;
+  }
+
+  #cartBtn {
+    font-size: 40px;
+    top: 20px;
+    margin-right: -40px;
+  }
+
+  #cart {
+    width: 100%;
+    transition: right 1s;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  h2 {
+    font-size: 80px;
+  }
+
+  .cartItem {
+    font-size: 50px;
+  }
+
+  .remove {
+    font-size: 35px;
+  }
+
+  #caption {
+    font-size: 60px;
+  }
+}

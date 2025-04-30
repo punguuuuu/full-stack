@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+  <head>
+    <title>pungu</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="./assets/js/art.js" defer></script>
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@latest/prop-types.js"></script>
+    <script type="text/babel" src="./assets/js/menu.js"></script>
+  </head>
+
+  <body onmousemove="mouseHover(event)">
+    <nav id="menu"></nav>
+
+    <main id="main" class="main">
+      <button id="menuBtn" onclick="toggleMenu()">Menu</button>
+
+      <h1 style="margin-top: 50px">Art ?</h1>
+
+      <div style="width: 100%; justify-items: center">
+        <div class="artContainer">
+          <img src="./assets/images/art/shapes.png" alt="shapes" />
+          <img src="./assets/images/art/red ratio.png" alt="ratio" />
+          <img src="./assets/images/art/wine.png" alt="wine" />
+          <img src="./assets/images/art/eat.png" alt="eat" />
+          <img src="./assets/images/art/earrings.png" alt="earrings" />
+          <img src="./assets/images/art/glasses.png" alt="glasses" />
+          <img
+            src="./assets/images/art/when should i go.png"
+            alt="where should i go"
+          />
+          <img src="./assets/images/art/guitar.png" alt="guitar" />
+          <img src="./assets/images/art/stairway.png" alt="stairway" />
+          <img src="./assets/images/art/vitruvian eye.png" alt="vitruvian eye" />
+          <img src="./assets/images/art/speak.png" alt="speak" />
+          <img src="./assets/images/art/read.png" alt="read" />
+        </div>
+      </div>
+
+      <canvas id="canvas" height="650" width="650"></canvas>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+.stacker {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  justify-items: center;
+  width: 85%;
+}
+
+#gameBtn {
+  animation: none;
+  height: 100px;
+  width: 300px;
+  font-size: 70px;
+  border-radius: 50px;
+}
+
+#gameBtn:hover {
+  background-color: black;
+  color: white;
+}
+
+#game {
+  height: 90vh;
+  border: 2px black solid;
+  margin-top: -10px;
+  margin-right: 150px;
+  display: flex;
+  flex-direction: column;
+  cursor: url("../cursors/15-Link-Select.cur"), pointer;
+}
+
+.row {
+  display: flex;
+  height: 100%;
+}
+
+.box {
+  width: 100%;
+  background-color: rgb(245, 245, 245);
+  border: 1px lightgrey solid;
+}
+
+.finalRow {
+  width: 100%;
+  background-color: rgb(208, 241, 208);
+  border: 1px lightgrey solid;
+}
+
+.bar {
+  background-color: rgb(17, 17, 17);
+}
+
+.blink {
+  animation: blink 0.15s forwards;
+  animation-iteration-count: 3;
+}
+
+#gameContainer {
+  position: relative;
+}
+
+#gameStatus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding-top: 200px;
+  font-size: 95px;
+  text-align: center;
+  display: none;
+  z-index: 3;
+}
+
+#prize {
+  position: relative;
+  display: none;
+  align-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.prizeImg {
+  position: relative;
+  height: 50vh;
+  z-index: 3;
+}
+
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 800px;
+  width: 800px;
+}
+
+.glowEffect {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, gold 0%, transparent 60%);
+  mask-image: conic-gradient(
+    white 0deg,
+    white 30deg,
+    transparent 30deg,
+    transparent 60deg,
+    white 60deg,
+    white 90deg,
+    transparent 90deg,
+    transparent 120deg,
+    white 120deg,
+    white 150deg,
+    transparent 150deg,
+    transparent 180deg,
+    white 180deg,
+    white 210deg,
+    transparent 210deg,
+    transparent 240deg,
+    white 240deg,
+    white 270deg,
+    transparent 270deg,
+    transparent 300deg,
+    white 300deg,
+    white 330deg,
+    transparent 330deg
+  );
+  filter: blur(50px);
+  animation: rotate 8s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  from {
+    background-color: black;
+  }
+  to {
+    background-color: rgb(245, 245, 245);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 1700px) {
+  #game {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .stacker {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .text {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  #game {
+    transform: scale(0.9);
+  }
+
+  #prize {
+    transform: scale(0.75);
+  }
+}

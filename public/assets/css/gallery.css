@@ -1,0 +1,181 @@
+.gallery-container {
+  position: relative;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  padding: 0 50px;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-top: 50px;
+}
+
+.gallery img {
+  height: 45vh;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.gallery img:hover {
+  cursor: url("../cursors/15-Link-Select.cur"), pointer;
+  border: 2px solid rgb(219, 217, 217);
+}
+
+#category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+#category a {
+  width: 25%;
+}
+
+.prev,
+.next {
+  cursor: url("../cursors/15-Link-Select.cur"), pointer;
+  width: auto;
+  color: black;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.prev.disabled,
+.next.disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.desc {
+  padding: 0 50px;
+}
+
+.modal {
+  display: none;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding-top: 130px;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 600px;
+}
+
+.modal-content,
+#caption {
+  animation: zoom 0.5s;
+  margin: 0;
+  text-align: center;
+  padding: 25px;
+  color: white;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+#submitBtn:hover {
+  background-color: rgb(17, 17, 17);
+  color: white;
+}
+
+.text {
+  padding: 0 50px;
+}
+
+@media screen and (max-width: 1200px) {
+  #category a {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .gallery-container {
+    padding: 0 1%;
+  }
+
+  .gallery img {
+    height: 41vh;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #category a {
+    font-size: 50px;
+  }
+
+  .input-container {
+    flex-direction: column;
+  }
+
+  .lineEdit {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #category {
+    padding: 0 20px;
+  }
+
+  #category a {
+    font-size: 40px;
+  }
+
+  .gallery {
+    padding: 0 10px;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: auto;
+  }
+
+  .prev,
+  .next {
+    font-size: 40px;
+    cursor: url("../cursors/15-Link-Select.cur"), pointer;
+    position: absolute;
+    width: auto;
+    color: black;
+    bottom: -70px;
+    padding: 10px;
+  }
+
+  .prev {
+    left: 2%;
+  }
+
+  .next {
+    right: 2%;
+  }
+
+  .desc {
+    padding-top: 35px;
+  }
+
+  .text {
+    font-size: 55px;
+  }
+}

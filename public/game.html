@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+  <head>
+    <title>pungu</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/game.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="./assets/js/game.js" defer></script>
+
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@latest/prop-types.js"></script>
+    <script type="text/babel" src="./assets/js/menu.js"></script>
+  </head>
+
+  <body onmousemove="mouseHover(event)" onload="init()">
+    <div id="menu"></div>
+
+    <main id="main" class="main" style="justify-items: center;">
+      <button id="menuBtn" onclick="toggleMenu()">Menu</button>
+
+      <div class="stacker">
+        <div style="flex: 1;">
+            <h1>Stacker</h1>
+            <p class="text" style="margin-top: -30px;">Stack the tower to the top and win a prize !</p>
+            <button id="gameBtn">Start</button>
+            <p id="text" class="text" style="margin: 5px; font-size: 50px;">use spacebar or click on the stacker</p>
+          </div>
+        <div id="gameContainer">
+          <p id="gameStatus"></p>
+          <div id="game"></div>
+        </div>
+      </div>
+      <div id="prize">
+        <div class="glow">
+          <div class="glowEffect"></div>
+        </div>
+        <img class="prizeImg" src="./assets/images/soft serve cone.png" alt="prize"/>
+      </div>
+    </main>
+  </body>
+</html>
