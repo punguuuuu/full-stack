@@ -14,6 +14,7 @@ class EmailModal extends React.Component {
     } else {
       this.setState({valid: false});
     }
+    window.dispatchEvent(new Event('updateUser'));
   }
   
   validateEmail = () => {
@@ -106,7 +107,7 @@ class MenuBar extends React.Component {
               <li><a href="#game" onClick={() => this.changePage('game.html')}>Stacker</a></li>
               <li><a href="#art" onClick={() => this.changePage('art.html')}>Art?</a></li>
               <li>
-                  <a href="#email" className="changeEmail" onClick={this.props.showEmailModal}>Change Email</a>
+                  <a href="#email" className="changeEmail" onClick={() => this.changePage('account.html')}>Account</a>
               </li>
           </ul>
         </>

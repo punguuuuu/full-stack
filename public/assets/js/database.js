@@ -46,6 +46,8 @@ async function createUser(email) {
 }
   
 async function searchUser(email) {
+    if (!email || email.trim() === "") return null;
+
     let { data, error } = await supabase
       .from('users')
       .select('*')
@@ -114,3 +116,31 @@ async function saveOrder(email, cart, orderTotal) {
     }
 }
 window.saveOrder = saveOrder;
+
+async function getOrderHistory(email) {
+  const userID = await searchUser(email);
+  const { data, error} = await supabase.rpc('execute_sql',{
+      query : `SELECT * FROM orders WHERE userId=${userID}`
+  });
+
+  if (error) {
+    console.error('Error executing query:', error);
+    return null;
+  } else {
+    return data;
+  }
+}
+window.getOrderHistory = getOrderHistory;
+
+async function getOrders(orderID) {
+  const { data, error } = await supabase.rpc('get_order_details_by_id', {
+    oid: orderID
+  });
+  
+  if (error) {
+    console.error('Query failed:', error);
+  } else {
+    return data;
+  }
+}
+window.getOrders = getOrders;

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+  <head>
+    <title>pungu</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script type="module" src="./assets/js/database.js" defer></script>
+
+    <script
+      src="https://unpkg.com/react@17/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@latest/prop-types.js"></script>
+    <script type="text/babel" src="./assets/js/menu.js"></script>
+    <script type="text/babel" src="./assets/js/orders.js" defer></script>
+
+    <script src="./assets/js/account.js" defer></script>
+  </head>
+
+  <body onmousemove="mouseHover(event)" onload="init()">
+    <nav id="menu"></nav>
+
+    <main id="main" class="main">
+      <button id="menuBtn" onclick="toggleMenu()">Menu</button>
+
+      <h1 style="margin-top: 50px">Account</h1>
+      <p id="userEmail" style="padding: 0; margin: 0;">Email " ???</p>
+      <a id="changeEmail" style="padding: 0; margin: 0; font-size: 40px;">Change email</a>
+
+      <h2 style="font-size: 80px;">Order history</h2>
+      <div id="orderHistory"><p>empty ...</p></div>
+    </main>
+  </body>
+</html>

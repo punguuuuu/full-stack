@@ -37,7 +37,15 @@ h1 {
   margin: 30px 100px;
 }
 
+h2 {
+  font-size: 100px;
+  font-weight: normal;
+  margin-top: 0;
+  padding-top: 50px;
+}
+
 h1:hover,
+h2:hover,
 p:hover {
   cursor: url("../cursors/6-Text-Select.cur"), text;
 }
