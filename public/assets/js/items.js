@@ -6,6 +6,7 @@ class ShopItems extends React.Component {
   showDetails = (items) => {
     document.getElementById("detail").style.right = 0;
     document.getElementById("image").src = items.imagepath;
+    document.getElementById("image").alt = items.itemid;
     document.getElementById("caption").innerHTML = items.name;
     document.getElementById("price").innerHTML = `$ ${items.price.toFixed(2)}`;
     document.getElementById("quantityValue").innerHTML = 1;
@@ -25,7 +26,7 @@ class ShopItems extends React.Component {
           <div className="item" key={index}>
             <img
               src={items.imagepath}
-              alt={items.name}
+              alt={items.itemid}
               style={{ marginBottom: "-80px" }}
               onClick={() => this.showDetails(items)}
             />

@@ -75,6 +75,7 @@ function addToCart() {
     total: (parseFloat(itemPrice.innerHTML.replace('$ ', '')) 
             * Number(quantity.innerHTML)).toFixed(2),
     src: itemImg.src,
+    id: itemImg.alt,
   };
 
   window.cartItems.push(itemInfo);
@@ -128,12 +129,6 @@ function checkout() {
     warning.style.opacity = 0;
 
     createEmail();
-    window.saveOrder(email);
-
-    window.cartItems.length = 0;
-    sessionStorage.setItem("cartItems", window.cartItems);
-    window.orderPlaced = true;
-    window.dispatchEvent(new Event("update"));
   } else {
     window.openEmailModal();
   }
@@ -157,6 +152,7 @@ function createEmail() {
   cart.forEach(item => {
     orderTotal += parseFloat(item.total);
   });
+  window.saveOrder(email, cart, orderTotal);
 
   const orderItems = cart
     .map(
@@ -177,24 +173,24 @@ function createEmail() {
     )
     .join("");
 
-  emailjs
-    .send(
-      "service_eqflx1d",
-      "template_u9siuy8",
-      {
-        email: email,
-        orderItems: orderItems,
-        total: parseFloat(orderTotal).toFixed(2),
-        time: date.toLocaleString(),
-      },
-      "LyjyTLGN4DHGtdTq1"
-    )
+  // emailjs
+  //   .send(
+  //     "service_eqflx1d",
+  //     "template_u9siuy8",
+  //     {
+  //       email: email,
+  //       orderItems: orderItems,
+  //       total: parseFloat(orderTotal).toFixed(2),
+  //       time: date.toLocaleString(),
+  //     },
+  //     "LyjyTLGN4DHGtdTq1"
+  //   )
 
-    .then((response) => {
-      console.log("Email sent successfully!", response);
-    })
+  //   .then((response) => {
+  //     console.log("Email sent successfully!", response);
+  //   })
 
-    .catch((error) => {
-      console.error("Error sending email:", error);
-    });
+  //   .catch((error) => {
+  //     console.error("Error sending email:", error);
+  //   });
 }

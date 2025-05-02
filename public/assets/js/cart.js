@@ -81,7 +81,7 @@ class Cart extends React.Component {
               <img src={item.src} alt="Cart Item" />
               <div style={this.textContainerStyle}>
                 <p className="cartItem">{item.desc}</p>
-                <p className="itemPrice">{item.price} X {item.quantity} = $ {item.total}</p>
+                <p className="itemPrice">$ {item.price.toFixed(2)} X {item.quantity} = $ {item.total}</p>
                 <div style={{display:"flex", gap:"20px"}}>
                   <a className="remove" onClick={() => this.removeItem(index)}>
                     Remove

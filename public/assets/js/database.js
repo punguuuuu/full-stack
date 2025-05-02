@@ -75,20 +75,42 @@ async function searchUser(email) {
     return data[0].userid;
 }  
 
-async function saveOrder(email) {
+async function saveOrderItems(orderID, item) {
+  const { data, error } = await supabase.rpc('insert_order_item', {
+    orderid: orderID,
+    itemid: item.id,
+    quantity: item.quantity
+  });  
+
+  if (error) {
+    console.error('Error executing query:', error);
+  } else {
+    console.log(`ordered item: (orderID: ${orderID}, itemID: ${item.id}, qty: ${item.quantity})`);
+  }
+}
+
+async function saveOrder(email, cart, orderTotal) {
     const userID = await searchUser(email);
     const date = new Date().toISOString();
   
     const { data, error } = await supabase.rpc('insert_order', {
       user_id: userID,
-      order_date: date
+      order_date: date,
+      total: orderTotal,
     });
   
     if (error) {
       console.error('Error executing query:', error);
     } else {
-      return data[0].order_id;
+      console.log('OrderID ' + data[0].order_id + ' saved');
+      cart.forEach(item => {
+        saveOrderItems(data[0].order_id, item);
+      });
+      
+      window.cartItems.length = 0;
+      sessionStorage.setItem("cartItems", window.cartItems);
+      window.orderPlaced = true;
+      window.dispatchEvent(new Event("update"));
     }
 }
-  
 window.saveOrder = saveOrder;
