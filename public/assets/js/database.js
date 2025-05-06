@@ -4,17 +4,20 @@ function escapeSqlString(str) {
     return str.replace(/'/g, "''");
 }
 
-async function getItems() {
+async function getItems(name) {
+    const sqlName = escapeSqlString(name);
+    if(name === "") {
+      return;
+    }
+
     const { data, error} = await supabase.rpc('execute_sql',{
-        query : `SELECT * FROM items`
+      query : `SELECT * FROM items WHERE LOWER(name) LIKE LOWER('%${sqlName}%')`
     });
     
     if (error) {
-        console.error('Error executing query:', error);
+      console.error('Error executing query:', error);
     } else {
-        data.forEach(item => {
-            console.log(item.name);
-        });
+      return data;
     }
 }
 window.getItems = getItems;

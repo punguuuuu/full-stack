@@ -182,6 +182,31 @@ div.item .desc {
   color: black;
 }
 
+.searchBar {
+  width: 40%;
+  min-width: 300px;
+  height: 52px;
+  margin: 20px 0;
+  font-family: custom, sans-serif;
+  font-size: 50px;
+  border: 3px solid black;
+  cursor: url("../cursors/6-Text-Select.cur"), text;
+}
+
+#searchBtn {
+  padding-left: 20px;
+}
+
+#searchResult {
+  padding-bottom: 30px;
+}
+
+@media screen and (max-width: 1400px) {
+  .searchBar {
+    width: 60%;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   #detail {
     width: 350px;
@@ -227,6 +252,14 @@ div.item .desc {
   #cart {
     width: 100%;
     transition: right 1s;
+  }
+
+  .searchBar {
+    width: 80%;
+  }
+
+  .searchBar::placeholder {
+    font-size: 35px;
   }
 }
 

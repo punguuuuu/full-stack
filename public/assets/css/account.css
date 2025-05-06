@@ -31,7 +31,7 @@ h2 {
 }
 
 .itemContainer {
-    display: flex; 
+    display: flex;
     border: 2px solid black;
     padding-right: 30px;
     font-size: 45px;

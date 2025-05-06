@@ -46,10 +46,14 @@ class Orders extends React.Component {
                     total: 0,
                 };
             }
-            acc[item.orderid].items.push(item);
-            acc[item.orderid].total += item.total;
+        
+            const itemTotal = item.price * item.quantity;
+            acc[item.orderid].items.push({ ...item, total: itemTotal });
+            acc[item.orderid].total += itemTotal;
+        
             return acc;
         }, {});
+        
         
         return (
             <>

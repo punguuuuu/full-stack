@@ -173,24 +173,24 @@ function createEmail() {
     )
     .join("");
 
-  // emailjs
-  //   .send(
-  //     "service_eqflx1d",
-  //     "template_u9siuy8",
-  //     {
-  //       email: email,
-  //       orderItems: orderItems,
-  //       total: parseFloat(orderTotal).toFixed(2),
-  //       time: date.toLocaleString(),
-  //     },
-  //     "LyjyTLGN4DHGtdTq1"
-  //   )
+  emailjs
+    .send(
+      "service_eqflx1d",
+      "template_u9siuy8",
+      {
+        email: email,
+        orderItems: orderItems,
+        total: parseFloat(orderTotal).toFixed(2),
+        time: date.toLocaleString(),
+      },
+      "LyjyTLGN4DHGtdTq1"
+    )
 
-  //   .then((response) => {
-  //     console.log("Email sent successfully!", response);
-  //   })
+    .then((response) => {
+      console.log("Email sent successfully!", response);
+    })
 
-  //   .catch((error) => {
-  //     console.error("Error sending email:", error);
-  //   });
+    .catch((error) => {
+      console.error("Error sending email:", error);
+    });
 }
