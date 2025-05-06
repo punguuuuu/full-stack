@@ -191,6 +191,7 @@ div.item .desc {
   font-size: 50px;
   border: 3px solid black;
   cursor: url("../cursors/6-Text-Select.cur"), text;
+  text-align: center;
 }
 
 #searchBtn {
@@ -199,6 +200,10 @@ div.item .desc {
 
 #searchResult {
   padding-bottom: 30px;
+}
+
+.searchBar::placeholder {
+  text-align: center;
 }
 
 @media screen and (max-width: 1400px) {
