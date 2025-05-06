@@ -63,7 +63,7 @@ class Cart extends React.Component {
     items.forEach(item => {
       total += item.price * item.quantity;
     });
-    document.getElementById("cartTotal").innerHTML = `Total " $ ${total.toFixed(2)}`;
+    document.getElementById("cartTotal").innerHTML = `Total : $ ${total.toFixed(2)}`;
   }
 
   render() {

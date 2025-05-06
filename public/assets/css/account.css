@@ -1,0 +1,129 @@
+h2 {
+    font-size: 80px;
+}
+
+#orderHistory {
+    justify-items: center;
+}
+
+#userEmail {
+    padding: 0 20px;
+    margin: 0;
+}
+
+#changeEmail {
+    padding: 0;
+    margin: 0;
+    font-size: 40px;
+}
+
+.orderContainer {
+    width: 70%;
+    text-align: left;
+}
+
+.orderInfo {
+    display:flex;
+    width: 100%;
+    gap: 150px;
+    justify-content:center;
+    margin-bottom: -40px
+}
+
+.itemContainer {
+    display: flex; 
+    border: 2px solid black;
+    padding-right: 30px
+}
+
+.itemImage {
+    width: 30%;
+    height: auto;
+}
+
+.infoContainer {
+    margin-top: -30px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between
+}
+
+.unitPrice { 
+    margin-top: -35px
+}
+
+.orderTotal {
+    text-align: right;
+    margin-top: -50px;
+    padding-right: 15px
+}
+
+@media screen and (max-width: 1600px) {
+    .unitPrice {
+        font-size: 45px;
+    }
+
+    .infoContainer{
+        font-size: 45px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    h2 {
+        font-size: 60px;
+    }
+
+    #userEmail {
+        font-size: 40px;
+    }
+
+    #changeEmail {
+        font-size: 30px;
+    }
+
+    .orderInfo {
+        flex-direction: column;
+        gap: 0;
+        font-size: 40px;
+        margin-left: 20px;
+    }
+
+    .itemContainer {
+        padding: 0;
+    }
+    
+    .itemImage {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .orderContainer {
+        width: 90%;
+    }
+
+    .itemContainer {
+        flex-direction: column;
+    }
+
+    .unitPrice { 
+        margin: 0;
+        padding-bottom: 20px;
+        font-size: 45px;
+        margin-left: 20px;
+    }
+
+    .infoContainer {
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 20px;
+    }
+    
+    .infoContainer > * {
+        margin: 0;
+    }
+
+    .orderTotal {
+        padding-top: 20px;
+        font-size: 45px;
+    }
+}

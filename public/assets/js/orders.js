@@ -38,25 +38,51 @@ class Orders extends React.Component {
     }
 
     render() {
+        const groupedOrders = this.state.orders.reduce((acc, item) => {
+            if (!acc[item.orderid]) {
+                acc[item.orderid] = {
+                    orderdate: item.orderdate,
+                    items: [],
+                    total: 0,
+                };
+            }
+            acc[item.orderid].items.push(item);
+            acc[item.orderid].total += item.total;
+            return acc;
+        }, {});
+        
         return (
             <>
-                {this.state.orders.length === 0 ? (
-                    <p>empty ...</p> 
-                    ) : (
-                        this.state.orders.map((item, index) => (
-                            <div key={index}>
-                                <img src={item.imagepath} alt={item.name}/>
-                                <p>{item.orderid}</p>
-                                <p>{item.orderdate}</p>
-                                <p>{item.name}</p>
-                                <p>{item.price}</p>
-                                <p>{item.quantity}</p>
-                                <p>{item.total}</p>
+                {Object.keys(groupedOrders).length === 0 ? (
+                    <p>empty ...</p>
+                ) : (
+                    Object.entries(groupedOrders).map(([orderid, order]) => (
+                        <div key={orderid} className="orderContainer">
+                            <div className="orderInfo">
+                                <p style={{marginBottom:"-40px"}}>Order ID : {orderid}</p>
+                                <p>Order date : {order.orderdate.split("T")[0]}</p>
                             </div>
-                        ))
+                            {order.items.map((item, index) => (
+                                <div key={index} className="itemContainer">
+                                    <img src={item.imagepath} alt={item.name} className="itemImage" />
+                                    <div style={{ width: "100%"}}>
+                                        <div className="infoContainer">
+                                            <p>{item.name}</p>
+                                            <p>Qty : {item.quantity}</p>
+                                            <p>Total : $ <strong>{item.total.toFixed(2)}</strong></p>
+                                        </div>
+                                        <p className="unitPrice">Unit price : $ {item.price.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            ))}
+                            <div className="orderTotal">
+                                <p>Order total: <strong>$ {order.total.toFixed(2)}</strong></p>
+                            </div>
+                        </div>
+                    ))
                 )}
             </>
-        );
+        );        
     }
 }
 

@@ -24,8 +24,8 @@ function init() {
     if (email && email.trim() !== "" && email.match(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     )){
-        userEmail.innerHTML = `Email " ${email}`;
+        userEmail.innerHTML = `Email : ${email}`;
     } else {
-        userEmail.innerHTML = `Email " ???`;
+        userEmail.innerHTML = `Email : ???`;
     }
 }
