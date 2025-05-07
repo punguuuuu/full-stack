@@ -38,10 +38,12 @@ h2 {
 }
 
 .itemImage {
-    width: 30%;
-    height: auto;
+    height: 30vh;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
 }
-
+  
 .infoContainer {
     margin-top: -30px;
     display: flex;
@@ -91,11 +93,6 @@ h2 {
 
     .itemContainer {
         padding: 0;
-    }
-    
-    .itemImage {
-        width: 100%;
-        max-width: 400px;
     }
 
     .orderContainer {

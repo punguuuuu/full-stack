@@ -75,6 +75,20 @@ class SearchItems extends React.Component {
     };
   }
 
+  componentDidMount() {
+    window.addEventListener('keypress', this.performSearch)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.performSearch)
+  }
+
+  performSearch = (event) => {
+    if (event.key === 'Enter') {
+      this.searchItem();
+    }
+  }
+
   searchItem = async () => {
     const input = this.searchItemInput.current.value.trim();
 
@@ -109,7 +123,7 @@ class SearchItems extends React.Component {
         <input
           type="text"
           className="searchBar"
-          placeholder="Search for your cravings here"
+          placeholder="Look for your cravings here"
           ref={this.searchItemInput}
         />
         <div style={{display:"flex", width:"100%", justifyContent:"center", gap:"50px"}}>

@@ -23,13 +23,13 @@ function playGif() {
   }
 
   img = document.getElementById("gif");
-  img.src = "./images/spin.gif";
+  img.src = "./assets/images/spin.gif";
   gifPlaying = true;
 
   setTimeout(function () {
-    img.src = "./images/spin0.png";
+    img.src = "./assets/images/spin0.png";
     gifPlaying = false;
-  }, 2100);
+  }, 2150);
 }
 
 function submitText() {

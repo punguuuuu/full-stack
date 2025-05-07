@@ -12,7 +12,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const img = new Image();
-img.src = "./images/art/sign here.png"; // make sure the path is correct
+img.src = "./assets/images/art/sign here.png";
 
 img.onload = function () {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
