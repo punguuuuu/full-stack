@@ -130,7 +130,7 @@ function checkout() {
 
     createEmail();
   } else {
-    window.openEmailModal();
+    window.openAccountModal();
   }
 }
 

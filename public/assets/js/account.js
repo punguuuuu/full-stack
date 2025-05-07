@@ -8,10 +8,10 @@ function mouseHover(event) {
     }
 }
 
-const changeEmail = document.getElementById("changeEmail");
+const changeAccount = document.getElementById("changeAccount");
 
-changeEmail.addEventListener("click", () => {
-    window.openEmailModal();
+changeAccount.addEventListener("click", () => {
+    window.openAccountModal();
 });
 
 window.addEventListener("updateUser", () => {

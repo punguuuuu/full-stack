@@ -1,18 +1,47 @@
-class EmailModal extends React.Component {
+class AccountModal extends React.Component {
   constructor(props){
     super(props);
+    this.password = React.createRef();
+    this.container = React.createRef();
     this.state = {
-      valid: true
+      validEmail: true,
+      validPassword: true,
+      type: 'logIn',
     }
   }
 
-  checkEmail = () => {
+  changeType = () => {
+    this.setState(
+      prevState => ({
+        type: prevState.type === 'logIn' ? 'signUp' : 'logIn'
+      }),
+      () => {
+        const containerRef = this.container.current;
+        if (containerRef) {
+          containerRef.style.animation = "none";
+          void containerRef.offsetWidth;
+          containerRef.style.animation = "zoom 0.5s";
+        }
+      }
+    );
+  }
+
+  checkDetails = () => {
     sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
     if (this.validateEmail()) {
-      this.props.close();
-      this.setState({valid: true});
+      this.setState({validEmail: true});
+      this.checkPassword();
     } else {
-      this.setState({valid: false});
+      this.setState({validEmail: false});
+    }
+  }
+
+  checkPassword = () => {
+    if (this.password.current.value !== ""){
+      this.props.close();
+      this.setState({validPassword: true});
+    } else {
+      this.setState({validPassword: false});
     }
     window.dispatchEvent(new Event('updateUser'));
   }
@@ -26,22 +55,75 @@ class EmailModal extends React.Component {
     );
   }
 
+  fieldName = {
+    color: "white",
+    fontSize: "40px",
+  }
+
+  fieldContainer = {
+    display:"flex",
+    justifyContent:"space-between",
+    marginBottom:"-15px",
+    alignItems:"center"
+  }
+
   render(){
     if(!this.props.visible) return null;
 
-    return (
-      <div id="emailModal">
-        <div id="emailContainer">
+    if(this.state.type === "logIn") return (
+      <div id="accountModal">
+        <div id="accountContainer" ref={this.container}>
           <a href="#close" 
             className="containerBtn"
             style={{marginBottom: "40px"}}
             onClick={this.props.close}>X</a>
 
-          <p style={{width: "60%", color: "white"}}>Please provide us your email</p>
-          <input type="text" className="lineEdit" style={{width: "80%", fontSize: "40px"}} 
-            defaultValue={sessionStorage.getItem("email") || ""}/>
-          <button id="confirmBtn" onClick={this.checkEmail}>Confirm</button>
-          {this.state.valid ? <div style={{padding:"23px"}}></div> : <p id="invalidEmail">Invalid Email !</p>}
+          <p style={{width: "60%", color: "white", fontSize: "60px"}}>Log In</p>
+
+          <div style={{textAlign: "left", width:"80%"}}>
+            <div style={this.fieldContainer}>
+              <p style={this.fieldName}>Email</p>
+              {this.state.validEmail ? <div></div> : <p id="invalid">User not found !</p>}
+            </div>
+            <input type="text" className="lineEdit" defaultValue={sessionStorage.getItem("email") || ""}/>
+            
+            <div style={this.fieldContainer}>
+              <p style={this.fieldName}>Password</p>
+              {this.state.validPassword ? <div></div> : <p id="invalid">Incorrect Password !</p>}
+            </div>
+            <input type="password" className="lineEdit" ref={this.password}/>
+          </div>
+          <button id="confirmBtn" onClick={this.checkDetails}>Log In</button>
+          <a style={{color: "white", fontSize: "30px", display:"block"}} onClick={this.changeType}>Sign Up</a>
+        </div>
+      </div>
+    );
+
+    if(this.state.type === "signUp") return (
+      <div id="accountModal">
+        <div id="accountContainer" ref={this.container}>
+          <a href="#close" 
+            className="containerBtn"
+            style={{marginBottom: "40px"}}
+            onClick={this.props.close}>X</a>
+
+          <p style={{width: "60%", color: "white", fontSize: "60px"}}>Sign Up</p>
+
+          <div style={{textAlign: "left", width:"80%"}}>
+            <div style={this.fieldContainer}>
+              <p style={this.fieldName}>Email</p>
+              {this.state.validEmail ? <div></div> : <p id="invalid">Invalid Email !</p>}
+            </div>
+            <input type="text" className="lineEdit" defaultValue={sessionStorage.getItem("email") || ""}/>
+            
+            <div style={this.fieldContainer}>
+              <p style={this.fieldName}>Password</p>
+              {this.state.validPassword ? <div></div> : <p id="invalid">Invalid Password !</p>}
+            </div>
+            <input type="password" className="lineEdit" ref={this.password}/>
+          </div>
+          <button id="confirmBtn" onClick={this.checkDetails}>Sign Up</button>
+          <a style={{color: "white", fontSize: "30px", display:"block"}} onClick={this.changeType}>Log In</a>
         </div>
       </div>
     );
@@ -107,7 +189,7 @@ class MenuBar extends React.Component {
               <li><a href="#game" onClick={() => this.changePage('game.html')}>Stacker</a></li>
               <li><a href="#art" onClick={() => this.changePage('art.html')}>Art?</a></li>
               <li>
-                  <a href="#email" className="changeEmail" onClick={() => this.changePage('account.html')}>Account</a>
+                  <a href="#email" className="changeAccount" onClick={() => this.changePage('account.html')}>Account</a>
               </li>
           </ul>
         </>
@@ -119,25 +201,25 @@ class Menu extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      showEmailModal: false
+      showAccountModal: false
     }
   }
 
-  showEmailModal = (show) => {
-    this.setState({showEmailModal: show});
+  showAccountModal = (show) => {
+    this.setState({showAccountModal: show});
   }
 
   componentDidMount() {
-    window.openEmailModal = () => {
-      this.showEmailModal(true);
+    window.openAccountModal = () => {
+      this.showAccountModal(true);
     }
   }
 
   render() {
     return(
       <>
-        <MenuBar showEmailModal={() => this.showEmailModal(true)}/>
-        <EmailModal visible={this.state.showEmailModal} close={() => this.showEmailModal(false)}/>
+        <MenuBar showAccountModal={() => this.showAccountModal(true)}/>
+        <AccountModal visible={this.state.showAccountModal} close={() => this.showAccountModal(false)}/>
       </>
     );
   }

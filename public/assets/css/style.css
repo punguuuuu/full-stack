@@ -111,7 +111,7 @@ a:hover {
   transition: left 0.5s ease;
 }
 
-.menu .changeEmail {
+.menu .changeAccount {
   position: absolute;
   width: 100%;
   margin-left: -20px;
@@ -230,21 +230,21 @@ a:hover {
 }
 
 .lineEdit {
-  width: 30%;
+  width: 100%;
   min-width: 300px;
-  height: 52px;
+  height: 50px;
   margin: 20px 0;
   font-family: custom, sans-serif;
-  font-size: 50px;
+  font-size: 40px;
   border: 3px solid black;
   cursor: url("../cursors/6-Text-Select.cur"), text;
 }
 
-#emailModal {
+#accountModal {
   position: fixed;
   justify-items: center;
   z-index: 10;
-  padding-top: 220px;
+  padding-top: 160px;
   top: 0;
   left: 0;
   height: 100%;
@@ -252,17 +252,17 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-#emailContainer {
+#accountContainer {
   background-color: rgb(17, 17, 17);
   justify-items: center;
   padding: 30px 0;
-  min-width: 350px;
-  width: 30%;
+  min-width: 400px;
+  width: 25%;
   height: auto;
   animation: zoom 0.5s;
 }
 
-#emailContainer * {
+#accountContainer * {
   margin: 10px 0;
 }
 
@@ -282,6 +282,7 @@ a:hover {
 
 #confirmBtn {
   margin-top: 30px;
+  font-size: 50px;
   color: white;
   background-color: rgb(17, 17, 17);
   border: 3px solid white;
@@ -292,9 +293,11 @@ a:hover {
   color: black;
 }
 
-#invalidEmail {
+#invalid {
   color: red;
-  font-size: 50px;
+  font-size: 40px;
+  padding: 0;
+  margin: 0;
 }
 
 .artContainer {
