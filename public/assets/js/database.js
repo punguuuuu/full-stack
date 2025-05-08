@@ -60,21 +60,9 @@ async function searchUser(email) {
       console.error('Error searching user:', error);
       return null;
     }
-  
-    if (data.length === 0) {
-      await createUser(email);
-  
-      const result = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', email);
-  
-      if (result.error || result.data.length === 0) {
-        console.error('User creation failed:', result.error);
-        return null;
-      }
-  
-      return result.data[0].userid;
+
+    if (data.length == 0) {
+      return null;
     }
   
     return data[0].userid;
@@ -122,6 +110,11 @@ window.saveOrder = saveOrder;
 
 async function getOrderHistory(email) {
   const userID = await searchUser(email);
+
+  if (!userID) {
+    return null;
+  }
+  
   const { data, error} = await supabase.rpc('execute_sql',{
       query : `SELECT * FROM orders WHERE userId=${userID}`
   });
@@ -147,3 +140,44 @@ async function getOrders(orderID) {
   }
 }
 window.getOrders = getOrders;
+
+async function logIn(email, password) {
+  const userID = await searchUser(email);
+
+  if (!userID) {
+    return 'User not found !';
+  }
+  
+  const { data, error} = await supabase.rpc('execute_sql',{
+    query : `SELECT password FROM users WHERE userid=${userID}`
+  });
+
+  if (error) {
+    console.error('Query failed:', error);
+  } else {
+    if (password === data[0].password){
+      return null;
+    }
+    return 'Incorrect password !'
+  }
+}
+window.logIn = logIn;
+
+async function signUp(email, password) {
+  const userID = await searchUser(email);
+
+  if (userID) {
+    return 'User alraedy exists !';
+  }
+  
+  const { data, error } = await supabase
+  .from('users')
+  .insert([{ email, password }]);
+
+  if (error) {
+    console.error('Query failed:', error);
+  } else {
+    return null;
+  }
+}
+window.signUp = signUp;

@@ -4,13 +4,21 @@ class AccountModal extends React.Component {
     this.password = React.createRef();
     this.container = React.createRef();
     this.state = {
-      validEmail: true,
-      validPassword: true,
+      emailError: "",
+      passwordError: "",
       type: 'logIn',
     }
   }
 
+  reset = () => {
+    this.setState({
+      emailError: '',
+      passwordError:'',
+    });
+  }
+
   changeType = () => {
+    this.reset();
     this.setState(
       prevState => ({
         type: prevState.type === 'logIn' ? 'signUp' : 'logIn'
@@ -27,23 +35,23 @@ class AccountModal extends React.Component {
   }
 
   checkDetails = () => {
-    sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
     if (this.validateEmail()) {
-      this.setState({validEmail: true});
-      this.checkPassword();
+      this.setState({emailError: ''});
+      return(this.checkPassword());
     } else {
-      this.setState({validEmail: false});
+      this.setState({emailError: 'Invalid Email !'});
+      return false;
     }
   }
 
   checkPassword = () => {
-    if (this.password.current.value !== ""){
-      this.props.close();
-      this.setState({validPassword: true});
+    if (this.password.current.value === ""){
+      this.setState({ passwordError: 'Invalid password !'});
+      return false;
     } else {
-      this.setState({validPassword: false});
+      this.setState({ passwordError: ''});
+      return true;
     }
-    window.dispatchEvent(new Event('updateUser'));
   }
   
   validateEmail = () => {
@@ -55,6 +63,52 @@ class AccountModal extends React.Component {
     );
   }
 
+  logIn = async () => {
+    this.reset();
+
+    if(this.checkDetails()) {
+      const logInStatus = await window.logIn(document.querySelector(".lineEdit").value, this.password.current.value);
+
+      if(!logInStatus) {
+        sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
+        window.dispatchEvent(new Event('updateUser'));
+        this.props.close();
+      }else if(logInStatus === 'User not found !') {
+        this.setState({ emailError: logInStatus});
+      }else if(logInStatus === 'Incorrect password !') {
+        this.setState({ passwordError: logInStatus});
+      }
+    }
+  }
+
+  signUp = async () => {
+    this.reset();
+
+    if(this.checkDetails()) {
+      const logInStatus = await window.signUp(document.querySelector(".lineEdit").value, this.password.current.value);
+
+      if(!logInStatus) {
+        sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
+        window.dispatchEvent(new Event('updateUser'));
+        this.props.close();
+
+        const message = document.getElementById("signUpMessage");
+        message.style.animation = "none";
+        void message.offsetWidth;
+        message.style.animation = "fadeOut 5s";
+
+      } else {
+        this.setState({ emailError: logInStatus});
+      }
+    }
+  }
+
+  containerName = {
+    width: "60%",
+    color: "white",
+    fontSize: "60px"
+  }
+
   fieldName = {
     color: "white",
     fontSize: "40px",
@@ -64,70 +118,63 @@ class AccountModal extends React.Component {
     display:"flex",
     justifyContent:"space-between",
     marginBottom:"-15px",
-    alignItems:"center"
+    alignItems:"center",
   }
 
-  render(){
-    if(!this.props.visible) return null;
-
-    if(this.state.type === "logIn") return (
+  render() {
+    if (!this.props.visible) return null;
+  
+    const isLogIn = this.state.type === "logIn";
+    const title = isLogIn ? "Log In" : "Sign Up";
+    const buttonText = isLogIn ? "Log In" : "Sign Up";
+    const buttonHandler = isLogIn ? this.logIn : this.signUp;
+    const toggleText = isLogIn ? "Sign Up" : "Log In";
+  
+    return (
       <div id="accountModal">
         <div id="accountContainer" ref={this.container}>
-          <a href="#close" 
+          <a
+            href="#close"
             className="containerBtn"
-            style={{marginBottom: "40px"}}
-            onClick={this.props.close}>X</a>
-
-          <p style={{width: "60%", color: "white", fontSize: "60px"}}>Log In</p>
-
-          <div style={{textAlign: "left", width:"80%"}}>
+            style={{ marginBottom: "40px" }}
+            onClick={this.props.close}
+          >X
+          </a>
+  
+          <p style={this.containerName}>{title}</p>
+  
+          <div style={{ textAlign: "left", width: "80%" }}>
             <div style={this.fieldContainer}>
               <p style={this.fieldName}>Email</p>
-              {this.state.validEmail ? <div></div> : <p id="invalid">User not found !</p>}
+              <p id="invalid">{this.state.emailError}</p>
             </div>
-            <input type="text" className="lineEdit" defaultValue={sessionStorage.getItem("email") || ""}/>
-            
+            <input
+              type="text"
+              className="lineEdit"
+              defaultValue={sessionStorage.getItem("email") || ""}
+            />
+  
             <div style={this.fieldContainer}>
               <p style={this.fieldName}>Password</p>
-              {this.state.validPassword ? <div></div> : <p id="invalid">Incorrect Password !</p>}
+              <p id="invalid">{this.state.passwordError}</p>
             </div>
-            <input type="password" className="lineEdit" ref={this.password}/>
+            <input type="password" className="lineEdit" ref={this.password} />
           </div>
-          <button id="confirmBtn" onClick={this.checkDetails}>Log In</button>
-          <a style={{color: "white", fontSize: "30px", display:"block"}} onClick={this.changeType}>Sign Up</a>
+  
+          <button id="confirmBtn" onClick={buttonHandler}>
+            {buttonText}
+          </button>
+  
+          <a
+            style={{ color: "white", fontSize: "30px", display: "block" }}
+            onClick={this.changeType}
+          >
+            {toggleText}
+          </a>
         </div>
       </div>
     );
-
-    if(this.state.type === "signUp") return (
-      <div id="accountModal">
-        <div id="accountContainer" ref={this.container}>
-          <a href="#close" 
-            className="containerBtn"
-            style={{marginBottom: "40px"}}
-            onClick={this.props.close}>X</a>
-
-          <p style={{width: "60%", color: "white", fontSize: "60px"}}>Sign Up</p>
-
-          <div style={{textAlign: "left", width:"80%"}}>
-            <div style={this.fieldContainer}>
-              <p style={this.fieldName}>Email</p>
-              {this.state.validEmail ? <div></div> : <p id="invalid">Invalid Email !</p>}
-            </div>
-            <input type="text" className="lineEdit" defaultValue={sessionStorage.getItem("email") || ""}/>
-            
-            <div style={this.fieldContainer}>
-              <p style={this.fieldName}>Password</p>
-              {this.state.validPassword ? <div></div> : <p id="invalid">Invalid Password !</p>}
-            </div>
-            <input type="password" className="lineEdit" ref={this.password}/>
-          </div>
-          <button id="confirmBtn" onClick={this.checkDetails}>Sign Up</button>
-          <a style={{color: "white", fontSize: "30px", display:"block"}} onClick={this.changeType}>Log In</a>
-        </div>
-      </div>
-    );
-  }
+  }  
 }
 
 class MenuBar extends React.Component {

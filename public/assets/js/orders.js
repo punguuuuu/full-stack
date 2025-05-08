@@ -10,6 +10,11 @@ class Orders extends React.Component {
     async loadOrderHistory() {
         const userOrders = await window.getOrderHistory(this.state.email);
         const individualOrders = [];
+
+        if (!userOrders){
+            this.setState({ orders: individualOrders });
+            return;
+        }
     
         for (const order of userOrders) {
             const allOrderDetails = await window.getOrders(order.orderid);
