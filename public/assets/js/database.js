@@ -1,4 +1,4 @@
-import { supabase } from "../../../supabase.js";
+import { supabase } from "../../supabase.js";
 
 function escapeSqlString(str) {
     return str.replace(/'/g, "''");
