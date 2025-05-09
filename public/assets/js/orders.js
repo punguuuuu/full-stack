@@ -76,7 +76,7 @@ class Orders extends React.Component {
                                     <img src={item.imagepath} alt={item.name} className="itemImage" />
                                     <div style={{ width: "100%"}}>
                                         <div className="infoContainer">
-                                            <p>{item.name}</p>
+                                            <p style={{minWidth:"40%"}}>{item.name}</p>
                                             <p>Qty : {item.quantity}</p>
                                             <p>Total : $ <strong>{item.total.toFixed(2)}</strong></p>
                                         </div>
