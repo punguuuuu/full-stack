@@ -1,4 +1,4 @@
-function showDetails(items) {
+function showItemDetails(items) {
   document.getElementById("detail").style.right = 0;
   document.getElementById("image").src = items.imagepath;
   document.getElementById("image").alt = items.itemid;
@@ -28,7 +28,7 @@ class ShopItems extends React.Component {
               src={items.imagepath}
               alt={items.itemid}
               style={{ marginBottom: "-80px" }}
-              onClick={() => showDetails(items)}
+              onClick={() => showItemDetails(items)}
             />
             <p>{items.name}</p>
           </div>
@@ -151,7 +151,7 @@ class SearchItems extends React.Component {
                   src={items.imagepath}
                   alt={items.itemid}
                   style={{ marginBottom: "-80px" }}
-                  onClick={() => showDetails(items)}
+                  onClick={() => showItemDetails(items)}
                 />
                 <p>{items.name}</p>
               </div>

@@ -69,12 +69,12 @@ function addToCart() {
   window.cartQuantity = parseInt(quantity.innerHTML);
 
   const itemInfo = {
-    desc: itemCaption.innerHTML,
+    name: itemCaption.innerHTML,
     price: parseFloat(itemPrice.innerHTML.replace('$ ', '')),
     quantity: Number(quantity.innerHTML),
     total: (parseFloat(itemPrice.innerHTML.replace('$ ', '')) 
             * Number(quantity.innerHTML)).toFixed(2),
-    src: itemImg.src,
+    imagepath: itemImg.src,
     id: itemImg.alt,
   };
 
@@ -159,10 +159,10 @@ function createEmail() {
       (item) => `
       <tr style="vertical-align: top; height: 61px;">
         <td style="padding: 24px 8px 0 4px; display: inline-block; width: max-content;">
-          <img style="height: 100px;" src=${item.src} alt="item" height="100px">
+          <img style="height: 100px;" src=${item.imagepath} alt="item" height="100px">
         </td>
         <td style="padding: 24px 8px 0 8px; width: 100%;">
-          <div>${item.desc}</div>
+          <div>${item.name}</div>
           <div>Unit price : $ ${item.price.toFixed(2)}</div>
           <div style="font-size: 14px; color: #888; padding-top: 4px;">&nbsp;</div>
         </td>

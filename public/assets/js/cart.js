@@ -78,9 +78,9 @@ class Cart extends React.Component {
         ) : (
           this.state.items.map((item, index) => (
             <div style={this.itemStyle} key={index}>
-              <img src={item.src} alt="Cart Item" />
+              <img src={item.imagepath} alt="Cart Item" onClick={() => showItemDetails(item)} style={{cursor:"url(/assets/cursors/15-Link-Select.cur), pointer"}}/>
               <div style={this.textContainerStyle}>
-                <p className="cartItem">{item.desc}</p>
+                <p className="cartItem">{item.name}</p>
                 <p className="itemPrice">$ {item.price.toFixed(2)} X {item.quantity} = $ {item.total}</p>
                 <div style={{display:"flex", gap:"20px"}}>
                   <a className="remove" onClick={() => this.removeItem(index)}>
