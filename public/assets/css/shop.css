@@ -80,7 +80,7 @@ div.item .desc {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: -15px;
+  margin-top: -40px;
 }
 
 .quantity .quantityValue {
@@ -282,6 +282,28 @@ div.item .desc {
   }
 
   #caption {
-    font-size: 60px;
+    font-size: 55px;
+  }
+
+  #addBtn {
+    font-size: 40px;
+    width: 50%;
+    height: 60px;
+    left: 25%;
+    bottom: 115px;
+  }
+
+  .loading {
+    height: 70px;
+    bottom: 110px;
+  }
+
+  .message {
+    font-size: 40px;
+  }
+
+  .detail-content {
+    width: 70%;
+    height: auto;
   }
 }
