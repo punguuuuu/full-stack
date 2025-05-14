@@ -64,6 +64,16 @@ class AccountModal extends React.Component {
     );
   }
 
+  updateAuth(type) {
+      const message = document.getElementById("authMessage");
+      message.innerHTML = type + ' Successful'
+      message.style.animation = "none";
+      void message.offsetWidth;
+      message.style.animation = "fadeOut 5s";
+
+      document.getElementById("auth").innerHTML = 'Log Out';
+  }
+
   logIn = async () => {
     this.reset();
 
@@ -74,12 +84,7 @@ class AccountModal extends React.Component {
       this.button.current.textContent = 'Log In';
       this.button.current.style.fontSize = '50px';
 
-      const message = document.getElementById("authentication");
-      message.innerHTML = 'Log In Successful'
-
-      message.style.animation = "none";
-      void message.offsetWidth;
-      message.style.animation = "fadeOut 5s";
+      this.updateAuth('Log In');
 
       if(!logInStatus) {
         sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
@@ -110,12 +115,7 @@ class AccountModal extends React.Component {
         window.dispatchEvent(new Event('updateUser'));
         this.props.close();
 
-        const message = document.getElementById("authentication");
-        message.innerHTML = 'Sign Up Successful'
-
-        message.style.animation = "none";
-        void message.offsetWidth;
-        message.style.animation = "fadeOut 5s";
+        this.updateAuth('Sign Up');
 
       } else if(signUpStatus === 'User already exist !') {
         this.setState({ emailError: signUpStatus});

@@ -36,9 +36,12 @@
 
       <h1 style="margin-top: 50px">Account</h1>
       <p id="userEmail">Email : ???</p>
-      <a id="changeAccount">Change account</a>
+      <div style="display: flex; gap: 50px; justify-content: center;">
+        <a id="changeAccount">Change account</a>
+        <a id="auth" onclick="signOut()">Log In</a>
+      </div>
       
-      <p id="authentication"></p>
+      <p id="authMessage"></p>
 
       <h2 style="padding-top: 120px">Order history</h2>
       <div id="orderHistory"><p>empty ...</p></div>
