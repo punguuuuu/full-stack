@@ -3,6 +3,7 @@ class AccountModal extends React.Component {
     super(props);
     this.password = React.createRef();
     this.container = React.createRef();
+    this.button = React.createRef();
     this.state = {
       emailError: "",
       passwordError: "",
@@ -67,16 +68,29 @@ class AccountModal extends React.Component {
     this.reset();
 
     if(this.checkDetails()) {
+      this.button.current.textContent = 'Loging in ...';
+      this.button.current.style.fontSize = '35px';
       const logInStatus = await window.logIn(document.querySelector(".lineEdit").value, this.password.current.value);
+      this.button.current.textContent = 'Log In';
+      this.button.current.style.fontSize = '50px';
+
+      const message = document.getElementById("authentication");
+      message.innerHTML = 'Log In Successful'
+
+      message.style.animation = "none";
+      void message.offsetWidth;
+      message.style.animation = "fadeOut 5s";
 
       if(!logInStatus) {
         sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
         window.dispatchEvent(new Event('updateUser'));
         this.props.close();
-      }else if(logInStatus === 'User not found !') {
+      } else if(logInStatus === 'User not found !') {
         this.setState({ emailError: logInStatus});
-      }else if(logInStatus === 'Incorrect password !') {
+      } else if(logInStatus === 'Incorrect password !') {
         this.setState({ passwordError: logInStatus});
+      } else if(logInStatus === 'Email not confirmed !') {
+        this.setState({ emailError: logInStatus});
       }
     }
   }
@@ -85,20 +99,28 @@ class AccountModal extends React.Component {
     this.reset();
 
     if(this.checkDetails()) {
-      const logInStatus = await window.signUp(document.querySelector(".lineEdit").value, this.password.current.value);
-
-      if(!logInStatus) {
+      this.button.current.textContent = 'Signing up ...';
+      this.button.current.style.fontSize = '35px';
+      const signUpStatus = await window.signUp(document.querySelector(".lineEdit").value, this.password.current.value);
+      this.button.current.textContent = 'Sign Up';
+      this.button.current.style.fontSize = '50px';
+      
+      if(!signUpStatus) {
         sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
         window.dispatchEvent(new Event('updateUser'));
         this.props.close();
 
-        const message = document.getElementById("signUpMessage");
+        const message = document.getElementById("authentication");
+        message.innerHTML = 'Sign Up Successful'
+
         message.style.animation = "none";
         void message.offsetWidth;
         message.style.animation = "fadeOut 5s";
 
-      } else {
-        this.setState({ emailError: logInStatus});
+      } else if(signUpStatus === 'User already exist !') {
+        this.setState({ emailError: signUpStatus});
+      } else if(signUpStatus === 'Password too short !') {
+        this.setState({ passwordError: signUpStatus});
       }
     }
   }
@@ -161,7 +183,7 @@ class AccountModal extends React.Component {
             <input type="password" className="lineEdit" ref={this.password} />
           </div>
   
-          <button id="confirmBtn" onClick={buttonHandler}>
+          <button id="confirmBtn" onClick={buttonHandler} ref={this.button}>
             {buttonText}
           </button>
   

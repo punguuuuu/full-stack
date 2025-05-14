@@ -62,12 +62,10 @@ h2 {
     padding-right: 15px
 }
 
-#signUpMessage {
-    position: fixed;
-    top: -5px;
-    right: 50px;
+#authentication {
     color: green;
-    z-index: 2;
+    margin: 0;
+    padding-top: 20px;
     opacity: 0;
 }
 
@@ -142,5 +140,9 @@ h2 {
     .orderTotal {
         padding-top: 20px;
         font-size: 45px;
+    }
+
+    #authentication {
+        font-size: 40px;
     }
 }

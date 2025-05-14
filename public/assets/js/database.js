@@ -115,9 +115,10 @@ async function getOrderHistory(email) {
     return null;
   }
   
-  const { data, error} = await supabase.rpc('execute_sql',{
-      query : `SELECT * FROM orders WHERE userId=${userID}`
-  });
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('userid', userID);
 
   if (error) {
     console.error('Error executing query:', error);
@@ -148,36 +149,57 @@ async function logIn(email, password) {
     return 'User not found !';
   }
   
-  const { data, error} = await supabase.rpc('execute_sql',{
-    query : `SELECT password FROM users WHERE userid=${userID}`
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
   });
 
   if (error) {
-    console.error('Query failed:', error);
-  } else {
-    if (password === data[0].password){
-      return null;
+    console.log(error);
+    if (error.message.includes("Invalid login credentials")) {
+      return "Incorrect password !";
+    } else if (error.message.includes("Email not confirmed")) {
+      return "Email not confirmed !";
+    } else {
+      console.error("Login error:", error);
+      return "An error occurred !";
     }
-    return 'Incorrect password !'
   }
+  return null;
 }
 window.logIn = logIn;
 
 async function signUp(email, password) {
-  const userID = await searchUser(email);
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+    email,
+    password
+  });
 
-  if (userID) {
-    return 'User alraedy exists !';
+  if (signUpError) {
+    if (signUpError.message.includes("User already registered")) {
+      return "User already exist !";
+    } else if (signUpError.message.includes("Password should be at least")) {
+      return "Password too short !";
+    } else {
+      return "An error occurred";
+    }
   }
-  
+
+  const userID = signUpData?.user?.id;
+
+  if (!userID) {
+    return "No user ID returned";
+  }
+
   const { data, error } = await supabase
-  .from('users')
-  .insert([{ email, password }]);
+    .from('users')
+    .insert([{ userid: userID, email: email }]);
 
   if (error) {
-    console.error('Query failed:', error);
-  } else {
-    return null;
+    console.error('Insert to users table failed:', error);
+    return "Failed to insert user !";
   }
+
+  return null;
 }
 window.signUp = signUp;
