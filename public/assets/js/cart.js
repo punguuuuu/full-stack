@@ -10,11 +10,15 @@ class Cart extends React.Component {
   componentDidMount() {
     window.addEventListener("update", () => {
       const items = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
-      this.updateCartTotal();
       this.setState({
         items: items,
         orderPlaced: window.orderPlaced,
       });
+      this.updateCartTotal();
+
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      checkoutBtn.innerHTML = 'Checkout';
+      checkoutBtn.style.fontSize = '60px';
     });
     this.updateCartTotal();
   }
@@ -57,10 +61,9 @@ class Cart extends React.Component {
     });
   };
 
-  updateCartTotal () {
-    const items = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+  updateCartTotal (items) {
     let total = 0;
-    items.forEach(item => {
+    this.state.items.forEach(item => {
       total += item.price * item.quantity;
     });
     document.getElementById("cartTotal").innerHTML = `Total : $ ${total.toFixed(2)}`;

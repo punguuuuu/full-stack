@@ -78,7 +78,14 @@ function addToCart() {
     id: itemImg.alt,
   };
 
-  window.cartItems.push(itemInfo);
+  const identicalItem = window.cartItems.find(item => item.id === itemInfo.id);
+  if(identicalItem) {
+    identicalItem.quantity += Number(quantity.innerHTML);
+    identicalItem.total = (Number(identicalItem.total) + 
+      (parseFloat(itemPrice.innerHTML.replace('$ ', '')) * Number(quantity.innerHTML))).toFixed(2);
+  } else {
+    window.cartItems.push(itemInfo);
+  }
   sessionStorage.setItem("cartItems", JSON.stringify(window.cartItems));
 
   setTimeout(() => {
@@ -127,7 +134,12 @@ function checkout() {
 
   if (validateEmail()) {
     warning.style.opacity = 0;
+
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    checkoutBtn.innerHTML = 'Checking out ...';
+    checkoutBtn.style.fontSize = '50px';
     createEmail();
+
   } else {
     window.openAccountModal();
   }
@@ -172,24 +184,24 @@ function createEmail() {
     )
     .join("");
 
-  // emailjs
-  //   .send(
-  //     "service_eqflx1d",
-  //     "template_u9siuy8",
-  //     {
-  //       email: email,
-  //       orderItems: orderItems,
-  //       total: parseFloat(orderTotal).toFixed(2),
-  //       time: date.toLocaleString(),
-  //     },
-  //     "LyjyTLGN4DHGtdTq1"
-  //   )
+  emailjs
+    .send(
+      "service_eqflx1d",
+      "template_u9siuy8",
+      {
+        email: email,
+        orderItems: orderItems,
+        total: parseFloat(orderTotal).toFixed(2),
+        time: date.toLocaleString(),
+      },
+      "LyjyTLGN4DHGtdTq1"
+    )
 
-  //   .then((response) => {
-  //     console.log("Email sent successfully!", response);
-  //   })
+    .then((response) => {
+      console.log("Email sent successfully!", response);
+    })
 
-  //   .catch((error) => {
-  //     console.error("Error sending email:", error);
-  //   });
+    .catch((error) => {
+      console.error("Error sending email:", error);
+    });
 }
