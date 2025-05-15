@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function checkout() {
-  const cart = await window.getCartItems(email);
+  const cart = await window.getCartItems(sessionStorage.getItem("email"));
   if (cart.length == 0) {
     warning.style.opacity = 1;
     window.orderPlaced = false;
