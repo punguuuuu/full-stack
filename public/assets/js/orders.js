@@ -85,7 +85,7 @@ class Orders extends React.Component {
                                 </div>
                             ))}
                             <div className="orderTotal">
-                                <p>Order total: <strong>$ {order.total.toFixed(2)}</strong></p>
+                                <p>Order total : <strong>$ {order.total.toFixed(2)}</strong></p>
                             </div>
                         </div>
                     ))
