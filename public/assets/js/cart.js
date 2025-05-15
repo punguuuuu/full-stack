@@ -8,8 +8,8 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("update", () => {
-      const items = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+    window.addEventListener("update", async () => {
+      const items = await window.getCartItems(sessionStorage.getItem('email'));
       this.setState({
         items: items,
         orderPlaced: window.orderPlaced,
@@ -42,9 +42,8 @@ class Cart extends React.Component {
     alignItems: "center",
   };
 
-  removeItem = (index) => {
-    window.cartItems.splice(index, 1);
-    sessionStorage.setItem("cartItems", JSON.stringify(window.cartItems));
+  async removeItem(itemid) {
+    await window.deleteItem(itemid, sessionStorage.getItem('email'));
     window.dispatchEvent(new Event("update"));
   };
 
@@ -54,7 +53,9 @@ class Cart extends React.Component {
       items[index].quantity += change;
       if (items[index].quantity < 1) items[index].quantity = 1;
       items[index].total = (items[index].price * items[index].quantity).toFixed(2);
-      sessionStorage.setItem("cartItems", JSON.stringify(items));
+
+      window.updateQuantity(items[index].quantity, items[index].itemid, sessionStorage.getItem('email'));
+
       return { items };
     }, () => {
       this.updateCartTotal();
@@ -84,9 +85,9 @@ class Cart extends React.Component {
               <img src={item.imagepath} alt="Cart Item" onClick={() => showItemDetails(item)} style={{cursor:"url(/assets/cursors/15-Link-Select.cur), pointer"}}/>
               <div style={this.textContainerStyle}>
                 <p className="cartItem">{item.name}</p>
-                <p className="itemPrice">$ {item.price.toFixed(2)} X {item.quantity} = $ {item.total}</p>
+                <p className="itemPrice">$ {item.price.toFixed(2)} X {item.quantity} = $ {(item.price * item.quantity).toFixed(2)}</p>
                 <div style={{display:"flex", gap:"20px"}}>
-                  <a className="remove" onClick={() => this.removeItem(index)}>
+                  <a className="remove" onClick={() => this.removeItem(item.itemid)}>
                     Remove
                   </a>
                   <a className="itemQuantity" onClick={() => this.changeQuantity(index, -1)}>-</a>
@@ -102,5 +103,9 @@ class Cart extends React.Component {
   }
 }
 
-const cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
-ReactDOM.render(<Cart items={cartItems} />, document.getElementById("cartInfo"));
+async function renderCart() {
+  const cartItems = await window.getCartItems(sessionStorage.getItem('email'));
+  ReactDOM.render(<Cart items={cartItems} />, document.getElementById("cartInfo"));
+}
+
+renderCart();

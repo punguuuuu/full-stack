@@ -66,12 +66,18 @@ class AccountModal extends React.Component {
 
   updateAuth(type) {
       const message = document.getElementById("authMessage");
-      message.innerHTML = type + ' Successful'
-      message.style.animation = "none";
-      void message.offsetWidth;
-      message.style.animation = "fadeOut 5s";
+      const auth = document.getElementById("auth");
 
-      document.getElementById("auth").innerHTML = 'Log Out';
+      if (message){
+        message.innerHTML = type + ' Successful'
+        message.style.animation = "none";
+        void message.offsetWidth;
+        message.style.animation = "fadeOut 5s";
+      }
+
+      if (auth){
+        document.getElementById("auth").innerHTML = 'Log Out';
+      }
   }
 
   logIn = async () => {
@@ -89,6 +95,7 @@ class AccountModal extends React.Component {
       if(!logInStatus) {
         sessionStorage.setItem("email", document.querySelector(".lineEdit").value);
         window.dispatchEvent(new Event('updateUser'));
+        window.dispatchEvent(new Event('update'));
         this.props.close();
       } else if(logInStatus === 'User not found !') {
         this.setState({ emailError: logInStatus});

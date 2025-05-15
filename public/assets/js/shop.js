@@ -61,38 +61,40 @@ function changeQuantity(increment) {
 let itemImg = document.getElementById("image");
 let itemCaption = document.getElementById("caption");
 let itemPrice = document.getElementById("price");
-window.cartItems = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
-function addToCart() {
+async function addToCart() {
   let addBtn = document.getElementById("addBtn");
-  addBtn.style.display = "none";
   message.style.opacity = 0;
   window.cartQuantity = parseInt(quantity.innerHTML);
-
+  
   const itemInfo = {
     name: itemCaption.innerHTML,
     price: parseFloat(itemPrice.innerHTML.replace('$ ', '')),
     quantity: Number(quantity.innerHTML),
     total: (parseFloat(itemPrice.innerHTML.replace('$ ', '')) 
-            * Number(quantity.innerHTML)).toFixed(2),
+    * Number(quantity.innerHTML)).toFixed(2),
     imagepath: itemImg.src,
     id: itemImg.alt,
   };
-
-  const identicalItem = window.cartItems.find(item => item.id === itemInfo.id);
-  if(identicalItem) {
-    identicalItem.quantity += Number(quantity.innerHTML);
-    identicalItem.total = (Number(identicalItem.total) + 
-      (parseFloat(itemPrice.innerHTML.replace('$ ', '')) * Number(quantity.innerHTML))).toFixed(2);
-  } else {
-    window.cartItems.push(itemInfo);
-  }
-  sessionStorage.setItem("cartItems", JSON.stringify(window.cartItems));
-
-  setTimeout(() => {
+  
+  if (validateEmail()) {
+    addBtn.style.display = "none";
+    const userCart = await getCartItems(sessionStorage.getItem('email'));
+    const identicalItem = userCart.find(item => item.name === itemInfo.name);
+    if(identicalItem) {
+      identicalItem.quantity += Number(quantity.innerHTML);
+      window.updateQuantity(identicalItem.quantity, identicalItem.itemid, sessionStorage.getItem('email'));
+    } else {
+      window.addItemToCart(itemInfo, sessionStorage.getItem('email'));
+    }
+  
     addBtn.style.display = "block";
     message.style.opacity = 1;
     window.dispatchEvent(new Event("update"));
-  }, 1700);
+  } else {
+    window.openAccountModal();
+    return;
+  }
+
 }
 
 let warning = document.getElementById("warning");
@@ -124,8 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
   window.orderPlaced = false;
 });
 
-function checkout() {
-  if (window.cartItems.length == 0) {
+async function checkout() {
+  const cart = await window.getCartItems(email);
+  if (cart.length == 0) {
     warning.style.opacity = 1;
     window.orderPlaced = false;
     window.dispatchEvent(new Event("update"));
@@ -156,16 +159,16 @@ function validateEmail() {
   );
 }
 
-function createEmail() {
+async function createEmail() {
   const date = new Date();
-  const cart = JSON.parse(sessionStorage.getItem("cartItems") || "[]");
+  const userCart = await window.getCartItems(email);
   let orderTotal = 0;
-  cart.forEach(item => {
-    orderTotal += parseFloat(item.total);
+  userCart.forEach(item => {
+    orderTotal += item.price * item.quantity.toFixed(2);
   });
-  window.saveOrder(email, cart, orderTotal);
+  await window.saveOrder(email, userCart, orderTotal);
 
-  const orderItems = cart
+  const orderItems = userCart
     .map(
       (item) => `
       <tr style="vertical-align: top; height: 61px;">
@@ -204,4 +207,7 @@ function createEmail() {
     .catch((error) => {
       console.error("Error sending email:", error);
     });
+    
+  await window.deleteItem(email);
+  window.dispatchEvent(new Event("update"));
 }

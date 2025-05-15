@@ -71,7 +71,7 @@ async function searchUser(email) {
 async function saveOrderItems(orderID, item) {
   const { data, error } = await supabase.rpc('insert_order_item', {
     orderid: orderID,
-    itemid: item.id,
+    itemid: item.itemid,
     quantity: item.quantity
   });  
 
@@ -100,8 +100,6 @@ async function saveOrder(email, cart, orderTotal) {
         saveOrderItems(data[0].order_id, item);
       });
       
-      window.cartItems.length = 0;
-      sessionStorage.setItem("cartItems", window.cartItems);
       window.orderPlaced = true;
       window.dispatchEvent(new Event("update"));
     }
@@ -155,7 +153,6 @@ async function logIn(email, password) {
   });
 
   if (error) {
-    console.log(error);
     if (error.message.includes("Invalid login credentials")) {
       return "Incorrect password !";
     } else if (error.message.includes("Email not confirmed")) {
@@ -203,3 +200,70 @@ async function signUp(email, password) {
   return null;
 }
 window.signUp = signUp;
+
+async function getCartItems(email) {
+  const userID = await searchUser(email);
+  const { data, error } = await supabase.rpc('get_cart_items', {
+    uid: userID
+  });
+
+  if (error) {
+    console.error("Failed to fetch cart:", error.message);
+  } else {
+    return data;
+  }
+}
+window.getCartItems = getCartItems;
+
+async function addItemToCart(item, email) {
+  const userID = await searchUser(email);
+  const { data, error } = await supabase
+    .from('cart')
+    .insert([{ 
+      userid: userID, 
+      itemid: item.id,
+      quantity: item.quantity,
+     }]);
+  
+  if (error) {
+    console.error('Query failed:', error);
+  } else {
+    return data;
+  }
+}
+window.addItemToCart = addItemToCart;
+
+async function deleteItem(email, itemid = null) {
+  const userID = await searchUser(email);
+
+  const matchParams = { userid: userID };
+  if (itemid !== null) {
+    matchParams.itemid = itemid;
+  }
+
+  const { data, error } = await supabase
+    .from('cart')
+    .delete()
+    .match(matchParams);
+
+  if (error) {
+    console.error('Delete failed:', error);
+  } else {
+    console.log('Deleted:', data);
+  }
+}
+
+window.deleteItem = deleteItem;
+
+async function updateQuantity(quantity, itemid, email) {
+  const userID = await searchUser(email);
+  const { data, error } = await supabase
+    .from('cart')
+    .update({ quantity: quantity })
+    .match({ userid: userID, itemid: itemid });
+
+  if (error) {
+    console.error('Update failed:', error);
+  }
+}
+window.updateQuantity = updateQuantity;
