@@ -6,6 +6,10 @@
   padding: 0 50px;
 }
 
+.lineedit {
+  width: 60%
+}
+
 .gallery {
   display: flex;
   gap: 10px;
