@@ -206,7 +206,7 @@ div.item .desc {
   text-align: center;
 }
 
-@media screen and (max-height: 850px) {
+@media screen and (max-height: 900px) {
   #addBtn {
     font-size: 50px;
   }
