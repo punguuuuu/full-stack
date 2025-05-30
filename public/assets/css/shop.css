@@ -206,6 +206,32 @@ div.item .desc {
   text-align: center;
 }
 
+@media screen and (max-height: 850px) {
+  #addBtn {
+    font-size: 50px;
+  }
+
+  #checkoutBtn {
+    font-size: 50px;
+  }
+
+  .detail-content {
+    width: 60%;
+    max-width: 400px;
+    height: auto;
+  }
+
+  #text {
+    font-size: 50px;
+    padding: 0 40px;
+    padding-top: 20px;
+  }
+
+  #caption {
+    font-size: 55px;
+  }
+}
+
 @media screen and (max-width: 1400px) {
   .searchBar {
     width: 60%;
