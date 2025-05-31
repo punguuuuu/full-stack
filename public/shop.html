@@ -4,18 +4,19 @@
   <head>
     <title>pungu</title>
     <link rel="icon" type="images/x-icon" href="./assets/images/icon.png" />
-    
+
     <link rel="stylesheet" href="./assets/css/shop.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <script type="module" src="./assets/js/database.js" defer></script>
-
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script src="./assets/js/shop.js" defer></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
     <script
       src="https://unpkg.com/react@17/umd/react.development.js"
@@ -52,8 +53,7 @@
       <div id="snack-items"></div>
 
       <h2 style="padding-top: 150px">Dessert</h2>
-      <div id="desert-items">
-      </div>
+      <div id="desert-items"></div>
     </main>
 
     <div id="detail">
@@ -71,7 +71,11 @@
         <button id="addBtn" class="customBtn" onclick="addToCart()">
           Add to cart
         </button>
-        <p id="message" class="message" style="color: rgb(82, 177, 82); text-align: center;">
+        <p
+          id="message"
+          class="message"
+          style="color: rgb(82, 177, 82); text-align: center"
+        >
           Added to cart !
         </p>
       </div>
@@ -80,7 +84,7 @@
     <div id="cart">
       <a href="#close" class="containerBtn" onclick="showCart(false)">X</a>
       <div id="cartInfo"></div>
-      <p id="cartTotal">Total : $ 0</p> 
+      <p id="cartTotal">Total : $ 0</p>
       <button id="checkoutBtn" class="customBtn" onclick="checkout()">
         Checkout
       </button>
@@ -88,6 +92,5 @@
         <p id="warning" class="message" style="color: red">Cart is empty !</p>
       </div>
     </div>
-
   </body>
 </html>

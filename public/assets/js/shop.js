@@ -65,28 +65,52 @@ async function addToCart() {
   let addBtn = document.getElementById("addBtn");
   message.style.opacity = 0;
   window.cartQuantity = parseInt(quantity.innerHTML);
-  
+
   const itemInfo = {
     name: itemCaption.innerHTML,
-    price: parseFloat(itemPrice.innerHTML.replace('$ ', '')),
+    price: parseFloat(itemPrice.innerHTML.replace("$ ", "")),
     quantity: Number(quantity.innerHTML),
-    total: (parseFloat(itemPrice.innerHTML.replace('$ ', '')) 
-    * Number(quantity.innerHTML)).toFixed(2),
+    total: (
+      parseFloat(itemPrice.innerHTML.replace("$ ", "")) *
+      Number(quantity.innerHTML)
+    ).toFixed(2),
     imagepath: itemImg.src,
     id: itemImg.alt,
   };
-  
+
   if (validateEmail()) {
     addBtn.style.display = "none";
-    const userCart = await getCartItems(sessionStorage.getItem('email'));
-    const identicalItem = userCart.find(item => item.name === itemInfo.name);
-    if(identicalItem) {
+    const res = await fetch(
+      `getCartItems?email=${encodeURIComponent(
+        sessionStorage.getItem("email")
+      )}`
+    );
+    const userCart = await res.json();
+    const identicalItem = userCart.find((item) => item.name === itemInfo.name);
+    if (identicalItem) {
       identicalItem.quantity += Number(quantity.innerHTML);
-      window.updateQuantity(identicalItem.quantity, identicalItem.itemid, sessionStorage.getItem('email'));
+      fetch("updateQuantity", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          quantity: identicalItem.quantity,
+          itemid: identicalItem.itemid,
+          email: sessionStorage.getItem("email"),
+        }),
+      });
     } else {
-      window.addItemToCart(itemInfo, sessionStorage.getItem('email'));
+      const res = await fetch("addItemToCart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          item: itemInfo,
+          email: sessionStorage.getItem("email"),
+        }),
+      });
     }
-  
+
     addBtn.style.display = "block";
     message.style.opacity = 1;
     window.dispatchEvent(new Event("update"));
@@ -94,7 +118,6 @@ async function addToCart() {
     window.openAccountModal();
     return;
   }
-
 }
 
 let warning = document.getElementById("warning");
@@ -127,8 +150,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function checkout() {
-  const cart = await window.getCartItems(sessionStorage.getItem("email"));
-  if (cart.length == 0) {
+  const res = await fetch(
+    `getCartItems?email=${encodeURIComponent(sessionStorage.getItem("email"))}`
+  );
+  const userCart = await res.json();
+  if (userCart.length == 0) {
     warning.style.opacity = 1;
     window.orderPlaced = false;
     window.dispatchEvent(new Event("update"));
@@ -138,11 +164,12 @@ async function checkout() {
   if (validateEmail()) {
     warning.style.opacity = 0;
 
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    checkoutBtn.innerHTML = 'Checking out ...';
-    checkoutBtn.style.fontSize = '50px';
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    checkoutBtn.innerHTML = "Checking out ...";
+    checkoutBtn.style.fontSize = "50px";
     createEmail();
-
+    checkoutBtn.innerHTML = "Check out";
+    checkoutBtn.style.fontSize = "60px";
   } else {
     window.openAccountModal();
   }
@@ -161,27 +188,46 @@ function validateEmail() {
 
 async function createEmail() {
   const date = new Date();
-  const userCart = await window.getCartItems(email);
+  const res = await fetch(
+    `getCartItems?email=${encodeURIComponent(sessionStorage.getItem("email"))}`
+  );
+  const userCart = await res.json();
   let orderTotal = 0;
-  userCart.forEach(item => {
+  userCart.forEach((item) => {
     orderTotal += item.price * item.quantity.toFixed(2);
   });
-  await window.saveOrder(email, userCart, orderTotal);
+  await fetch("saveOrder", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: email,
+      cart: userCart,
+      orderTotal: orderTotal,
+    }),
+  });
+  window.orderPlaced = true;
+  window.dispatchEvent(new Event("update"));
 
   const orderItems = userCart
     .map(
       (item) => `
       <tr style="vertical-align: top; height: 61px;">
         <td style="padding: 24px 8px 0 4px; display: inline-block; width: max-content;">
-          <img style="height: 100px;" src=${item.imagepath} alt="item" height="100px">
+          <img style="height: 100px;" src=${
+            item.imagepath
+          } alt="item" height="100px">
         </td>
         <td style="padding: 24px 8px 0 8px; width: 100%;">
           <div>${item.name}</div>
           <div>Unit price : $ ${item.price.toFixed(2)}</div>
           <div style="font-size: 14px; color: #888; padding-top: 4px;">&nbsp;</div>
         </td>
-        <td style="padding: 24px 40px 0 0; white-space: nowrap;">Qty : ${item.quantity}</td>
-        <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>$ ${item.total}</strong></td>
+        <td style="padding: 24px 40px 0 0; white-space: nowrap;">Qty : ${
+          item.quantity
+        }</td>
+        <td style="padding: 24px 4px 0 0; white-space: nowrap;"><strong>$ ${(
+          item.price * item.quantity
+        ).toFixed(2)}</strong></td>
       </tr>
     `
     )
@@ -207,7 +253,9 @@ async function createEmail() {
     .catch((error) => {
       console.error("Error sending email:", error);
     });
-    
-  await window.deleteItem(email);
+
+  await fetch(`deleteItem?email=${encodeURIComponent(email)}`, {
+    method: "DELETE",
+  });
   window.dispatchEvent(new Event("update"));
 }
