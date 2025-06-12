@@ -72,40 +72,42 @@ class Orders extends React.Component {
         {Object.keys(groupedOrders).length === 0 ? (
           <p>empty ...</p>
         ) : (
-          Object.entries(groupedOrders).map(([orderid, order]) => (
-            <div key={orderid} className="orderContainer">
-              <div className="orderInfo">
-                <p style={{ marginBottom: "-40px" }}>Order ID : {orderid}</p>
-                <p>Order date : {order.orderdate.split("T")[0]}</p>
-              </div>
-              {order.items.map((item, index) => (
-                <div key={index} className="itemContainer">
-                  <img
-                    src={item.imagepath}
-                    alt={item.name}
-                    className="itemImage"
-                  />
-                  <div style={{ width: "100%" }}>
-                    <div className="infoContainer">
-                      <p style={{ minWidth: "40%" }}>{item.name}</p>
-                      <p>Qty : {item.quantity}</p>
-                      <p>
-                        Total : $ <strong>{item.total.toFixed(2)}</strong>
+          Object.entries(groupedOrders)
+            .reverse()
+            .map(([orderid, order]) => (
+              <div key={orderid} className="orderContainer">
+                <div className="orderInfo">
+                  <p style={{ marginBottom: "-40px" }}>Order ID : {orderid}</p>
+                  <p>Order date : {order.orderdate.split("T")[0]}</p>
+                </div>
+                {order.items.map((item, index) => (
+                  <div key={index} className="itemContainer">
+                    <img
+                      src={item.imagepath}
+                      alt={item.name}
+                      className="itemImage"
+                    />
+                    <div style={{ width: "100%" }}>
+                      <div className="infoContainer">
+                        <p style={{ minWidth: "40%" }}>{item.name}</p>
+                        <p>Qty : {item.quantity}</p>
+                        <p>
+                          Total : $ <strong>{item.total.toFixed(2)}</strong>
+                        </p>
+                      </div>
+                      <p className="unitPrice">
+                        Unit price : $ {item.price.toFixed(2)}
                       </p>
                     </div>
-                    <p className="unitPrice">
-                      Unit price : $ {item.price.toFixed(2)}
-                    </p>
                   </div>
+                ))}
+                <div className="orderTotal">
+                  <p>
+                    Order total : <strong>$ {order.total.toFixed(2)}</strong>
+                  </p>
                 </div>
-              ))}
-              <div className="orderTotal">
-                <p>
-                  Order total : <strong>$ {order.total.toFixed(2)}</strong>
-                </p>
               </div>
-            </div>
-          ))
+            ))
         )}
       </>
     );
