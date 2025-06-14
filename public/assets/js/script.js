@@ -1,9 +1,9 @@
-function toggleMenu(){
+function toggleMenu() {
   window.dispatchEvent(new Event("toggleMenu"));
 }
 
-function mouseHover (event){
-  if(event.clientX < 30){
+function mouseHover(event) {
+  if (event.clientX < 30) {
     window.dispatchEvent(new Event("showMenu"));
   }
 }
@@ -40,7 +40,7 @@ function submitText() {
   text.innerHTML =
     inputText.value.trim() === ""
       ? "It's EMPTY !"
-      : "Thanks ! Here's your reward \";";
+      : "Thanks ! Here's your reward :)";
 
   if (inputText.value.trim() !== "") {
     reward.style.height = "600px";
