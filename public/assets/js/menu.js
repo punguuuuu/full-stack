@@ -185,7 +185,7 @@ class AccountModal extends React.Component {
           <a
             href="#close"
             className="containerBtn"
-            style={{ marginBottom: "40px" }}
+            // style={{ marginBottom: "40px" }}
             onClick={this.props.close}
           >
             X

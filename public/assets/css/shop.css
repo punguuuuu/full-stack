@@ -206,7 +206,7 @@ div.item .desc {
   text-align: center;
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (max-height: 780px) {
   #addBtn {
     font-size: 50px;
   }
@@ -215,8 +215,12 @@ div.item .desc {
     font-size: 50px;
   }
 
+  #caption {
+    font-size: 55px;
+  }
+
   .detail-content {
-    width: 60%;
+    width: 50%;
     max-width: 400px;
     height: auto;
   }
@@ -228,7 +232,11 @@ div.item .desc {
   }
 
   #price {
-    font-size: 60px;
+    font-size: 45px;
+  }
+
+  #message {
+    font-size: 45px;
   }
 }
 
