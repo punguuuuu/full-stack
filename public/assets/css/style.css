@@ -395,6 +395,10 @@ a:hover {
     width: 50%;
   }
 
+  .tooltip .tooltiptext {
+    margin-left: -60px;
+  }
+
   #gif {
     width: 80%;
   }
