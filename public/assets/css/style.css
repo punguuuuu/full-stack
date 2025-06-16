@@ -394,6 +394,10 @@ a:hover {
   .artContainer {
     width: 50%;
   }
+
+  #gif {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 800px) {
